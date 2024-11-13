@@ -11,36 +11,45 @@ namespace RentCars.Controllers
     {
         // GET: api/<Client>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<Client> Get()
         {
-            return new string[] { "value1", "value2" };
+            return DataContext.clientList;
         }
 
         // GET api/<Client>/5
         [HttpGet("{id}")]
         public string Get(int id)
         {
+            var client1 = DataContext.clientList.FirstOrDefault(t => t.Id == id);
+            if (client1 == null)
+            {
+                return "User not found";
+            }
+
             return "value";
         }
 
         // POST api/<Client>
         [HttpPost]
         //public void Post([FromBody] string value)
-        public void Post(Client client)
+        public void Post([FromBody] Client c)
         {
+            DataContext.clientList.Add(c);
         }
 
         // PUT api/<Client>/5
         [HttpPut("{id}")]
-        //public void Put(int id, [FromBody] string value)
-        public void Put(Client c, string phone)//לעדכן טלפון
+        public void Put(int id, [FromBody] Client c)
         {
+            Client res = DataContext.clientList.FirstOrDefault(c1=>c1.Id==c.Id);
+            res = c;//לוודא שאכן משנה את הליסט 
         }
 
         // DELETE api/<Client>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)//מחפש לקוח לפי ID ומוחק
+        public void Delete(Client c)
         {
+            DataContext.clientList.Remove(c);
         }
     }
 }

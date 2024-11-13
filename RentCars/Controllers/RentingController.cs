@@ -18,7 +18,7 @@ namespace RentCars.Controllers
 
         // GET api/<RentingController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public string Get(int id)//מחפש רכב ומציג אותו לפי ID
         {
             return "value";
         }
