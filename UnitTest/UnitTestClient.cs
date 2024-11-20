@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using RentCars.Controllers;
 using RentCars.Entities;
+using RentCars.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
@@ -9,21 +10,23 @@ namespace UnitTest
     public class UnitTestClient
     {
         public ClientController clientTest;
+        public IDataContext context;
         public UnitTestClient()
         {
+            FakeDataContext context = new FakeDataContext();
             // מוודא שהרשימה תיווצר על ידי המחלקה הקיימת
-            clientTest = new ClientController();
+            clientTest = new ClientController(context);
         }
         [Fact]
         public void Get_ReturnsAllClients()
         {
-            var result = clientTest.Get();
-            Assert.Equal(DataContext.clientList.Count, result.Count());
+            var result = clientTest.Get(); 
+            Assert.Equal(context.clientList.Count, result.Count());
         }
         [Fact]
         public void GetById_ReturnsClient_WhenClientExists()
         {
-            var client1 = DataContext.clientList.FirstOrDefault();
+            var client1 = context.clientList.FirstOrDefault();
             if (client1 != null)
             {
                 var result = clientTest.Get(client1.Id);
@@ -41,17 +44,17 @@ namespace UnitTest
         {
             var newClient = new Client(3, "New Client", "123456789", 1234);
             clientTest.Post(newClient); 
-            Assert.Contains(newClient, DataContext.clientList);
+            Assert.Contains(newClient, context.clientList);
         }
         [Fact]
         public void Put_UpdatesClientInList()
         {
-            var existingClient = DataContext.clientList.FirstOrDefault();
+            var existingClient = context.clientList.FirstOrDefault();
             if (existingClient != null)
             {
                 var updatedClient = new Client(existingClient.Id, "Updated Client", "987654321", 5678);
                 clientTest.Put(existingClient.Id, updatedClient);
-                var client = DataContext.clientList.First(c => c.Id == existingClient.Id);
+                var client = context.clientList.First(c => c.Id == existingClient.Id);
                 Assert.Equal("Updated Client", client.Name);//בדיקה אם הלקוח עודכן
                 Assert.Equal("987654321", client.PhoneNumber);
                 Assert.Equal(5678, client.LicenseNumber);
@@ -60,11 +63,11 @@ namespace UnitTest
         [Fact]
         public void Delete_RemovesClientFromList()
         {
-            var clientToDelete = DataContext.clientList.FirstOrDefault();
+            var clientToDelete = context.clientList.FirstOrDefault();
             if (clientToDelete != null)
             {
-                clientTest.Delete(clientToDelete);
-                Assert.DoesNotContain(clientToDelete, DataContext.clientList);
+                clientTest.Delete(clientToDelete.Id);
+                Assert.DoesNotContain(clientToDelete, context.clientList);
             }
         }
     }

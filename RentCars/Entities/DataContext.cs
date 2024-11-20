@@ -1,17 +1,18 @@
 ﻿using System.Net;
 using System.Security.Claims;
 using System;
+using RentCars.Interfaces;
 
 namespace RentCars.Entities
 {
-    public class DataContext
+    public class DataContext : IDataContext
     {
-        public static List<Car> carList = new List<Car>();
-        public static List<Client> clientList = new List<Client>();
-        public static List<Orders> orderList = new List<Orders>();
+        public List<Car> carList { get; set; }
+        public List<Client> clientList { get; set; }
+        public List<Orders> orderList { get; set; }
 
 
-        static DataContext()
+        public DataContext()
         {
             carList = new List<Car>();
             clientList = new List<Client>();

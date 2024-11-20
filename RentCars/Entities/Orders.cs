@@ -24,12 +24,7 @@ namespace RentCars.Entities
             this.CarId = carId;
 
         }
-        public int CalcPrice(DateTime dateFrom, DateTime dateTo) {
-            //להשתמש בפונקציה SUMPRICE במחלקת רכב כדי לחשב סכום כללי
-            return 0;
-        }
-        public void Change(int numOrder, DateTime dateFrom, DateTime dateTo) { }
-        public void Delete(int numOrder) { }
+       
         public override string ToString() //print
         {
             return "Order Number: " + NumOrder + " " + "Client Id: " + ClientId + " " + "Date of renting : " + DateFrom + " " +

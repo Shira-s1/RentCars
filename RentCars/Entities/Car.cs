@@ -25,7 +25,7 @@ namespace RentCars.Entities
             this.Price = price;
             this.Model = Model;
         }
-        public int CalcSum(int price, int year) { return 0; }//מחיר יומי שיחושב לפי שנה וסוג רכב
+        
         public override string ToString()
         {
             return "Id: " + Id + " " + "Company Name: " + Cname + " " + " User Name: " + Name + " " +

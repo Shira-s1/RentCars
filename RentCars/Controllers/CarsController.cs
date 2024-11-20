@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RentCars.Entities;
+using RentCars.Interfaces;
 using System.Diagnostics;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -10,18 +11,18 @@ namespace RentCars.Controllers
     [ApiController]
     public class CarsController : ControllerBase
     {
-        //static List<Car> cars = new List<Car>() {
-        //    new Car() { Id = 1, status = Enum.RentStatus.Available, CompanyId = 1 },
-        //    new Car() { Id = 2, status = Enum.RentStatus.Rented, CompanyId = 4 },
-        //    new Car() { Id = 3, status = Enum.RentStatus.Available, CompanyId = 6 },
-        //    new Car() { Id = 4, status = Enum.RentStatus.UnderRepair, CompanyId = 1 }
-        //};
+        private readonly IDataContext _dataContext;
+        public CarsController(IDataContext context)
+        {
+            _dataContext = context;
+        }
 
         // GET: api/<CarsController>
         [HttpGet]
         public ActionResult<List<Car>> Get()
         {
-            int carsAvialible = DataContext.carList.Count;
+            // סופרת את מספר הרכבים הזמינים ברשימה
+            int carsAvialible = _dataContext.carList.Count;
 
             return Ok(carsAvialible);
         }
@@ -31,7 +32,7 @@ namespace RentCars.Controllers
         [HttpGet("{id}")]
         public ActionResult<Car> Get(int id)
         {
-            Car result = DataContext.carList.FirstOrDefault(f => f.Id == id);
+            Car result = _dataContext.carList.FirstOrDefault(f => f.Id == id);// מחפשת רכב לפי מזהה
             if (result != null)
                return Ok(result);
 
@@ -43,7 +44,8 @@ namespace RentCars.Controllers
         [HttpPost]
         public void Post([FromBody] Car newCar)
         {
-            DataContext.carList.Add(newCar);
+            // מוסיפה רכב חדש לרשימת הרכבים
+            _dataContext.carList.Add(newCar);
         }
 
         // PUT api/<CarsController>/5
@@ -51,8 +53,8 @@ namespace RentCars.Controllers
         // public void Put(int id, [FromBody] string value)
         public void Put([FromBody] Car c)
         {
-            Car newCar = DataContext.carList.FirstOrDefault(f1 => f1.Id == c.Id);
-            newCar = c;
+            Car newCar = _dataContext.carList.FirstOrDefault(f1 => f1.Id == c.Id);
+            newCar = c;// מעדכנת את המידע של הרכב ברשימה
         }
 
         // DELETE api/<CarsController>/5
@@ -61,7 +63,7 @@ namespace RentCars.Controllers
         {
             try
             {
-                DataContext.carList.Remove(car);
+                _dataContext.carList.Remove(car);// מסירה את הרכב מהרשימה
                 return Ok(true);
             }
             catch (Exception)

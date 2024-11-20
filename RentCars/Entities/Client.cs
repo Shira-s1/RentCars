@@ -17,8 +17,7 @@ namespace RentCars.Entities
             this.LicenseNumber = LicenseNumber;
 
         }
-        public void Update(string phoneNumber) { }
-        public void Delete(int id, string name, string phoneNumber, int LicenseNumber) { }
+       
         
         
         //3 cars options
