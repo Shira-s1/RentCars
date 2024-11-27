@@ -1,8 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
 using RentCars.Controllers;
-using RentCars.Entities;
-using RentCars.Interfaces;
+using RentCars.Core.Entities;
+//using RentCars.Core.Entities;
+using RentCars.Core.Interfaces;
 using System.Collections.Generic;
+using RentCars.Srevice.Services;
 using System.Linq;
 using Xunit;
 namespace UnitTest
@@ -20,7 +22,7 @@ namespace UnitTest
         [Fact]
         public void Get_ReturnsAllClients()
         {
-            var result = clientTest.Get(); 
+            var result = clientTest.Get();
             Assert.Equal(context.clientList.Count, result.Count());
         }
         [Fact]
@@ -43,7 +45,7 @@ namespace UnitTest
         public void Post_AddsClientToList()
         {
             var newClient = new Client(3, "New Client", "123456789", 1234);
-            clientTest.Post(newClient); 
+            clientTest.Post(newClient);
             Assert.Contains(newClient, context.clientList);
         }
         [Fact]
@@ -72,3 +74,4 @@ namespace UnitTest
         }
     }
 }
+

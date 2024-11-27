@@ -1,4 +1,4 @@
-﻿namespace RentCars.Entities
+﻿namespace RentCars.Core.Entities
 {
     public class Company//אפשר להוריד
     {

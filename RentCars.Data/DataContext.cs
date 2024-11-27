@@ -1,9 +1,10 @@
 ﻿using System.Net;
 using System.Security.Claims;
 using System;
-using RentCars.Interfaces;
+using RentCars.Core.Interfaces;
+using RentCars.Core.Entities;
 
-namespace RentCars.Entities
+namespace RentCars.Data.Entities
 {
     public class DataContext : IDataContext
     {

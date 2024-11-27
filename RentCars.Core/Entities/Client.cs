@@ -1,6 +1,6 @@
 ﻿using System.Xml.Linq;
 
-namespace RentCars.Entities
+namespace RentCars.Core.Entities
 {
     public class Client
     {

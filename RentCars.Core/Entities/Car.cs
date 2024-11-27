@@ -1,7 +1,7 @@
-﻿using RentCars.Enum;
+﻿using RentCars.Core.Enum;
 using System.Xml.Linq;
 
-namespace RentCars.Entities
+namespace RentCars.Core.Entities
 {
     public class Car
     {

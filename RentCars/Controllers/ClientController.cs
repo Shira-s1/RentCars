@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using RentCars.Entities;
-using RentCars.Interfaces;
+using RentCars.Core.Entities;
+using RentCars.Core.Interfaces;
+using RentCars.Srevice.Services;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -15,24 +16,28 @@ namespace RentCars.Controllers
         {
             _dataContext = context;
         }
+        private readonly ClientService _clientService;
+        public ClientController(ClientService clientService)
+        {
+            _clientService = clientService;
+        }
         // GET: api/<Client>
         [HttpGet]
-        public IEnumerable<Client> Get()
+        public ActionResult<List<Client>> Get()
         {
-            return _dataContext.clientList;
+            return Ok(_clientService.Get());
         }
 
         // GET api/<Client>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public ActionResult<Client> Get(int id)
         {
-            var client1 = _dataContext.clientList.FirstOrDefault(t => t.Id == id);
-            if (client1 == null)
+            var client = _clientService.Get(id);
+            if (client == null)
             {
-                return "User not found";
+                return NotFound("User not found");
             }
-
-            return "value";
+            return Ok(client);
         }
 
         // POST api/<Client>
@@ -45,20 +50,30 @@ namespace RentCars.Controllers
 
         // PUT api/<Client>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] Client c)
+        public IActionResult Put(int id, [FromBody] Client updatedClient)
         {
-            Client res = _dataContext.clientList.FirstOrDefault(c1 => c1.Id == c.Id);
-
-            res = c;//לוודא שאכן משנה את הליסט 
+            try
+            {
+                _clientService.UpdateClient(id, updatedClient);
+                return NoContent();
+            }
+            catch (Exception)
+            {
+                return NotFound("Client not found");
+            }
         }
 
         // DELETE api/<Client>/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
-            var clientToDelete = _dataContext.clientList.FirstOrDefault(c => c.Id == id); 
-            if (clientToDelete != null) { 
-                _dataContext.clientList.Remove(clientToDelete); 
+            try
+            {
+                _clientService.Delete(id); // מסירה את הלקוח מהרשימה
+            }
+            catch (Exception ex)
+            {
+                 BadRequest();
             }
         }
     }

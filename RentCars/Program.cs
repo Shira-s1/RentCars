@@ -1,5 +1,5 @@
-using RentCars.Entities;
-using RentCars.Interfaces;
+using RentCars.Core.Entities;
+using RentCars.Core.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 

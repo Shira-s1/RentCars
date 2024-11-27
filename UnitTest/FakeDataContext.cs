@@ -1,6 +1,6 @@
-﻿using RentCars.Interfaces;
+﻿using RentCars.Core.Interfaces;
 
-namespace RentCars.Entities
+namespace RentCars.Core.Entities
 {
     public class FakeDataContext:IDataContext
     {

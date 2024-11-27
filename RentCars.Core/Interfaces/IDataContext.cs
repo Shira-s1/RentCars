@@ -1,6 +1,7 @@
-﻿using RentCars.Entities;
+﻿using RentCars.Core.Entities;
 
-namespace RentCars.Interfaces
+
+namespace RentCars.Core.Interfaces
 {
     public interface IDataContext
     {

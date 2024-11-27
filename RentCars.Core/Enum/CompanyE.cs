@@ -1,4 +1,4 @@
-﻿namespace RentCars.Enum
+﻿namespace RentCars.Core.Enum
 {
     public enum CompanyE
     {

@@ -1,10 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using RentCars.Entities;
-using RentCars.Interfaces;
+using RentCars.Core.Entities;
+using RentCars.Core.Interfaces;
+using RentCars.Service.Services;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace RentCars.Controllers
+namespace RentCars.Core.Controllers
 {
 
     [Route("api/[controller]")]
@@ -16,18 +17,24 @@ namespace RentCars.Controllers
         {
             _dataContext = context;
         }
+        private readonly RentingService _rentingService;
+        public RentingController(RentingService rentingService)
+        { _rentingService = rentingService; }
+
+
         // GET: api/<RentingController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public ActionResult<IEnumerable<Car>> Get()
         {
-            return new string[] { "value1", "value2" };
+            var cars = _rentingService.Get();
+            return Ok(cars);
         }
 
         // GET api/<RentingController>/5
         [HttpGet("{id}")]
         public ActionResult<Car> Get(int id)//מחפש רכב ומציג אותו לפי ID
         {
-            var car = _dataContext.carList.FirstOrDefault(c => c.Id == id);
+            var car = _rentingService.Get(id);
             if (car == null)
             {
                 return NotFound("Car not found");
@@ -38,28 +45,28 @@ namespace RentCars.Controllers
         // POST api/<RentingController>
         [HttpPost]
         //public void Post([FromBody] string value)
-        public ActionResult Post(Car c)//-ליצור חדש ולהוסיף אותו להוסיף רכב להשכרה
+        public ActionResult Post([FromBody] Car c)//-ליצור חדש ולהוסיף אותו להוסיף רכב להשכרה
         {
             if (c == null)
             {
                 return BadRequest("Invalid car data");
             }
-            _dataContext.carList.Add(c);
+            _rentingService.Post(c);
             return Ok();
         }
 
         // PUT api/<RentingController>/5
         [HttpPut("{id}")]
         //public void Put(int id, [FromBody] string value)
-        public ActionResult Put(int id, [FromBody] Car c)//עדכון רכב שהושכר- לשנות סטטוס
+        public ActionResult Put(int id, [FromBody] Car updatedCar)//עדכון רכב שהושכר- לשנות סטטוס
         {
-            var carToUpdate = _dataContext.carList.FirstOrDefault(c1 => c1.Id == id); 
-            if (carToUpdate == null) {
-                return NotFound("Car not found"); 
+            var carToUpdate = _rentingService.Get(id);
+            if (carToUpdate == null)
+            {
+                return NotFound("Car not found");
             }
-            carToUpdate.Status = c.Status; 
-            // משנה את הסטטוס לרכב שהושכר או אחר // ניתן להוסיף שדות נוספים לשינוי בהתאם לדרישות
-             return Ok();
+            _rentingService.Put(id, updatedCar);
+            return NoContent();
         }
 
         // DELETE api/<RentingController>/5
@@ -68,8 +75,9 @@ namespace RentCars.Controllers
         public void Delete(int numOrder)//מוחק לפי מספר הזמנה
         {
             var orderToDelete = _dataContext.orderList.FirstOrDefault(o => o.NumOrder == numOrder);
-            if (orderToDelete != null) {
-                _dataContext.orderList.Remove(orderToDelete);
+            if (orderToDelete != null)
+            {
+                _rentingService.Delete(numOrder);
             }
         }
     }
