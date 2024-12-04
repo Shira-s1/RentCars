@@ -1,26 +1,22 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RentCars.Core.Entities;
 using RentCars.Core.Interfaces;
-using RentCars.Srevice.Services;
+using RentCars.Service.Services;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace RentCars.Controllers
+namespace RentCars.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class ClientController : ControllerBase
     {
-        private readonly IDataContext _dataContext;
-        public ClientController(IDataContext context)
+        private readonly IClientService _clientService;
+        public ClientController(IClientService context)
         {
-            _dataContext = context;
+            _clientService = context;
         }
-        private readonly ClientService _clientService;
-        public ClientController(ClientService clientService)
-        {
-            _clientService = clientService;
-        }
+       
         // GET: api/<Client>
         [HttpGet]
         public ActionResult<List<Client>> Get()
@@ -45,7 +41,7 @@ namespace RentCars.Controllers
         //public void Post([FromBody] string value)
         public void Post([FromBody] Client c)
         {
-            _dataContext.clientList.Add(c);
+            _clientService.Post(c);
         }
 
         // PUT api/<Client>/5
@@ -55,7 +51,7 @@ namespace RentCars.Controllers
             try
             {
                 _clientService.UpdateClient(id, updatedClient);
-                return NoContent();
+                return Ok("Client updated successfully");
             }
             catch (Exception)
             {
@@ -71,9 +67,9 @@ namespace RentCars.Controllers
             {
                 _clientService.Delete(id); // מסירה את הלקוח מהרשימה
             }
-            catch (Exception ex)
+            catch
             {
-                 BadRequest();
+                BadRequest();
             }
         }
     }

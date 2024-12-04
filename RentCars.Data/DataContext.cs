@@ -4,7 +4,7 @@ using System;
 using RentCars.Core.Interfaces;
 using RentCars.Core.Entities;
 
-namespace RentCars.Data.Entities
+namespace RentCars.Data
 {
     public class DataContext : IDataContext
     {
@@ -12,7 +12,7 @@ namespace RentCars.Data.Entities
         public List<Client> clientList { get; set; }
         public List<Orders> orderList { get; set; }
 
-
+       
         public DataContext()
         {
             carList = new List<Car>();

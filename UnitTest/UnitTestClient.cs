@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using RentCars.Controllers;
 using RentCars.Core.Entities;
-//using RentCars.Core.Entities;
 using RentCars.Core.Interfaces;
 using System.Collections.Generic;
 using RentCars.Srevice.Services;

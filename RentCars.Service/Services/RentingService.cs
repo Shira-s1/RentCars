@@ -1,7 +1,6 @@
 ﻿using RentCars.Core.Entities;
 using RentCars.Core.Interfaces;
 using System.Runtime.InteropServices;
-using RentCars.Srevice.Services;
 using System.Net.Sockets;
 using System.Diagnostics;
 using System.Reflection;
@@ -10,7 +9,7 @@ using System.Xml.Linq;
 
 namespace RentCars.Service.Services
 {
-    public class RentingService
+    public class RentingService :IRentingService
     {
 
         //private readonly IDataContext _dataContext;
@@ -42,9 +41,9 @@ namespace RentCars.Service.Services
         //    }
         //}
         private readonly IDataContext _dataContext;
-        public RentingService(IDataContext context)
+        public RentingService(IDataContext dataContext)
         {
-            _dataContext = context;
+            _dataContext = dataContext;
         }
 
       

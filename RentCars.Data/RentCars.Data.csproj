@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\RentCars.Core\RentCars.Core.csproj" />
-    <ProjectReference Include="..\RentCars\RentCars.Api.csproj" />
   </ItemGroup>
 
 </Project>

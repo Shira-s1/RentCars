@@ -2,28 +2,25 @@
 using RentCars.Core.Entities;
 //using RentCars.Entities;
 using RentCars.Core.Interfaces;
-using RentCars.Srevice.Services;
+using RentCars.Service.Services;
 using System.Diagnostics;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace RentCars.Controllers
+namespace RentCars.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class CarsController : ControllerBase
     {
-        private readonly CarService _carService;
-        private readonly IDataContext _dataContext;
+        //private readonly CarService _carService;
+        private readonly ICarService _carService;
 
-        public CarsController(IDataContext context)
+        public CarsController(ICarService context)
         {
-            _dataContext = context;
+            _carService = context;
         }
-        public CarsController(CarService carService)
-        {
-            _carService = carService;
-        }
+      
         // GET: api/<CarsController>
         [HttpGet]
         public ActionResult<List<Car>> Get()
@@ -38,19 +35,20 @@ namespace RentCars.Controllers
         [HttpGet("{id}")]
         public ActionResult<Car> Get(int id)
         {
-            // מחזירה את רשימת הרכבים
-            List<Car> cars = _carService.GetCars();
-            return Ok(cars);
-
+            // מחפשת את הרכב הרצוי
+           Car ans = _carService.GetSearch(id);
+            if (ans == null )  
+                return NoContent();
+            return Ok(ans);
         }
 
         // POST api/<CarsController>
         [HttpPost]
         public void Post([FromBody] Car newCar)
         {
-            if(newCar != null) 
-            // מוסיפה רכב חדש לרשימת הרכבים
-            _dataContext.carList.Add(newCar);
+            if (newCar != null)
+                // מוסיפה רכב חדש לרשימת הרכבים
+                _carService.AddCar(newCar);
         }
 
         // PUT api/<CarsController>/5

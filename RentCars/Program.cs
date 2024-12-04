@@ -1,5 +1,7 @@
 using RentCars.Core.Entities;
 using RentCars.Core.Interfaces;
+using RentCars.Data;
+using RentCars.Service.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,7 +12,11 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddSingleton<IDataContext , DataContext>();
+builder.Services.AddSingleton<IDataContext, DataContext>();
+//builder.Services.AddScoped<IDataContext , DataContext>();
+builder.Services.AddScoped<ICarService, CarService>();
+builder.Services.AddScoped<IClientService, ClientService>();
+builder.Services.AddScoped<IRentingService, RentingService>();
 
 var app = builder.Build();
 
