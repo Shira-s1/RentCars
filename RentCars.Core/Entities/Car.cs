@@ -6,7 +6,7 @@ namespace RentCars.Core.Entities
     public class Car
     {
         public int Id { get; set; }
-        public CompanyE Cname { get; set; }//companyEnum
+        public Company Cname { get; set; }
         public string Name { get; set; }
         public RentStatus Status { get; set; }
         public int Price { get; set; }
@@ -15,7 +15,7 @@ namespace RentCars.Core.Entities
        
 
 
-        public Car(int id, CompanyE cname, string name, RentStatus status, int price, int model, int LicensePlate)
+        public Car(int id, Company cname, string name, RentStatus status, int price, int model, int LicensePlate)
         {
             this.LicensePlate = LicensePlate;
             this.Id = id;

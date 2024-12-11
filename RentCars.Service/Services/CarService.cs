@@ -1,6 +1,7 @@
 ﻿using RentCars.Core.Entities;
 using RentCars.Core.Enum;
 using RentCars.Core.Interfaces;
+using RentCars.Data;
 using System.Diagnostics;
 using System.Reflection;
 using System.Runtime.InteropServices;
@@ -11,8 +12,8 @@ namespace RentCars.Service.Services
 {
     public class CarService :ICarService
     {
-        private readonly IDataContext _dataContext;
-       public CarService(IDataContext dataContext)
+        private readonly DataContext _dataContext;
+       public CarService(DataContext dataContext)
         { 
             _dataContext = dataContext; 
         }

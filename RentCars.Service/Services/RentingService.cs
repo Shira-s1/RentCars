@@ -5,7 +5,7 @@ using System.Net.Sockets;
 using System.Diagnostics;
 using System.Reflection;
 using System.Xml.Linq;
-
+using RentCars.Data;
 
 namespace RentCars.Service.Services
 {
@@ -40,8 +40,8 @@ namespace RentCars.Service.Services
 
         //    }
         //}
-        private readonly IDataContext _dataContext;
-        public RentingService(IDataContext dataContext)
+        private readonly DataContext _dataContext;
+        public RentingService(DataContext dataContext)
         {
             _dataContext = dataContext;
         }
@@ -77,7 +77,7 @@ namespace RentCars.Service.Services
         public void Put(int id, Car updatedCar)
         {
             var carToUpdate = _dataContext.carList.FirstOrDefault(c1 => c1.Id == id);
-            if (carToUpdate == null)
+            if (carToUpdate != null)
             {
                 carToUpdate.Status = updatedCar.Status;
                 carToUpdate.LicensePlate = updatedCar.LicensePlate;

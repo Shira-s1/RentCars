@@ -2,7 +2,7 @@
 
 namespace RentCars.Core.Entities
 {
-    public class FakeDataContext:IDataContext
+    public class FakeDataContext:DataContext
     {
         public  List<Car> carList { get; set; }
         public  List<Client> clientList { get; set; }

@@ -2,14 +2,14 @@
 using RentCars.Core.Interfaces;
 using System.Net.Sockets;
 using System.Runtime.InteropServices;
-
+using RentCars.Data;
 namespace RentCars.Service.Services
 {
     public class ClientService :IClientService
     {
 
-        private readonly IDataContext _dataContext;
-        public ClientService(IDataContext dataContext)
+        private readonly DataContext _dataContext;
+        public ClientService(DataContext dataContext)
         {
             _dataContext = dataContext; 
         }

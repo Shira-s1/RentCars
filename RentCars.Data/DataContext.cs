@@ -3,21 +3,21 @@ using System.Security.Claims;
 using System;
 using RentCars.Core.Interfaces;
 using RentCars.Core.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace RentCars.Data
 {
-    public class DataContext : IDataContext
+    public class DataContext : DbContext
     {
-        public List<Car> carList { get; set; }
-        public List<Client> clientList { get; set; }
-        public List<Orders> orderList { get; set; }
+        public DbSet<Car> carList { get; set; }
+        public DbSet<Client> clientList { get; set; }
+        public DbSet<Orders> orderList { get; set; }
 
-       
-        public DataContext()
+        protected override void OnConfiguring(DbContextOptionsBuilder optionBuilder)
         {
-            carList = new List<Car>();
-            clientList = new List<Client>();
-            orderList = new List<Orders>();
+            optionBuilder.UseSqlServer(@"Server=(localdb)\MSSQLLocalDB;Database=Data_db");
         }
+
+
     }
 }

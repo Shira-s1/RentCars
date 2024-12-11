@@ -1,11 +1,15 @@
 ﻿namespace RentCars.Core.Entities
 {
-    public class Company//אפשר להוריד
+    public class Company
     {
         public int Id { get; set; }
         public string Name { get; set; }
 
-        //ctor
-        //year, country 
+        
+        public Company(int id, string name)
+        {
+            this.Id = id;
+            this.Name = name;
+        }
     }
 }

@@ -80,6 +80,9 @@ namespace RentCars.Api.Controllers
             {
                 _rentingService.Delete(numOrder);
             }
+           
         }
+        
+        
     }
 }
