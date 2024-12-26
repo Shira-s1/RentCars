@@ -13,33 +13,34 @@ namespace RentCars.Api.Controllers
     [ApiController]
     public class CarsController : ControllerBase
     {
-        //private readonly CarService _carService;
         private readonly ICarService _carService;
 
         public CarsController(ICarService context)
         {
             _carService = context;
         }
-      
+
         // GET: api/<CarsController>
         [HttpGet]
         public ActionResult<List<Car>> Get()
         {
             // מחזירה את רשימת הרכבים
             List<Car> cars = _carService.GetCars();
+           // if(cars == null)
+             //   return NotFound();
             return Ok(cars);
         }
 
 
         // GET api/<CarsController>/5
         [HttpGet("{id}")]
-        public ActionResult<Car> Get(int id)
+        public Car Get(int id)
         {
             // מחפשת את הרכב הרצוי
-           Car ans = _carService.GetSearch(id);
-            if (ans == null )  
-                return NoContent();
-            return Ok(ans);
+            Car ans = _carService.GetSearch(id);
+            if (ans == null)
+                return null;
+            return ans;
         }
 
         // POST api/<CarsController>
@@ -53,14 +54,15 @@ namespace RentCars.Api.Controllers
 
         // PUT api/<CarsController>/5
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] Car updatedCar)
+        public IActionResult Put([FromBody] Car updatedCar)
         {
-            try
+            Car car = _carService.GetSearch(updatedCar.Id);
+            if (car != null)
             {
                 _carService.UpdateCar(updatedCar); // מעדכנת את המידע של הרכב ברשימה
                 return NoContent();
             }
-            catch (Exception)
+            else
             {
                 return NotFound();
             }

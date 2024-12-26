@@ -10,17 +10,17 @@ using System.Xml.Linq;
 
 namespace RentCars.Service.Services
 {
-    public class CarService :ICarService
+    public class CarService : ICarService
     {
         private readonly DataContext _dataContext;
-       public CarService(DataContext dataContext)
-        { 
-            _dataContext = dataContext; 
+        public CarService(DataContext dataContext)
+        {
+            _dataContext = dataContext;
         }
-      
+
         public List<Car> GetCars() //מחזירה את רשימת הרכבים
         {
-            return _dataContext.carList;
+            return _dataContext.carList.ToList();
         }
 
 
@@ -33,6 +33,7 @@ namespace RentCars.Service.Services
         {
             // מוסיפה רכב חדש לרשימת הרכבים
             _dataContext.carList.Add(newCar);
+            _dataContext.SaveChanges();
         }
 
 
@@ -54,6 +55,7 @@ namespace RentCars.Service.Services
             {
                 throw new Exception("Car not found");
             }
+            _dataContext.SaveChanges();
         }
 
         public void Delete(int id)
@@ -68,6 +70,7 @@ namespace RentCars.Service.Services
             {
                 throw new Exception("Car not found");
             }
+            _dataContext.SaveChanges();
         }
     }
 

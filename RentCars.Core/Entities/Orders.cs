@@ -1,9 +1,11 @@
-﻿using System.Xml.Linq;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Xml.Linq;
 
 namespace RentCars.Core.Entities
 {
     public class Orders
     {
+        [Key]
         public int NumOrder { get; set; }//מספר הזמנה
         public int ClientId { get; set; }
         public DateTime DateFrom { get; set; }
@@ -24,7 +26,10 @@ namespace RentCars.Core.Entities
             this.CarId = carId;
 
         }
-       
+
+        public Orders()
+        {
+        }
         public override string ToString() //print
         {
             return "Order Number: " + NumOrder + " " + "Client Id: " + ClientId + " " + "Date of renting : " + DateFrom + " " +

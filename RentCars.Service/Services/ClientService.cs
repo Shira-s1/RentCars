@@ -17,7 +17,7 @@ namespace RentCars.Service.Services
        // private readonly ClientService _clientService;
         public List<Client> Get()
         {
-            return _dataContext.clientList;
+            return _dataContext.clientList.ToList();
         }
 
 
@@ -36,10 +36,11 @@ namespace RentCars.Service.Services
         public void Post(Client c)
         {
             _dataContext.clientList.Add(c);
+            _dataContext.SaveChanges();
         }
 
 
-        public void UpdateClient(int id, Client updatedClient)
+        public void UpdateClient(Client updatedClient)
         {
             Client existingClient = _dataContext.clientList.FirstOrDefault(c1 => c1.Id == updatedClient.Id);
             if (existingClient != null)
@@ -54,6 +55,7 @@ namespace RentCars.Service.Services
             {
                 throw new Exception("Client not found");
             }
+            _dataContext.SaveChanges();
         }
 
         public void Delete(int id)
@@ -63,7 +65,7 @@ namespace RentCars.Service.Services
             {
                 _dataContext.clientList.Remove(clientToDelete);
             }
-
+            _dataContext.SaveChanges();
         }
     }
 }

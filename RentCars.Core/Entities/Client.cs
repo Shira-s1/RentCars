@@ -17,9 +17,12 @@ namespace RentCars.Core.Entities
             this.LicenseNumber = LicenseNumber;
 
         }
-       
-        
-        
+        public Client()
+        {
+            
+        }
+
+
         //3 cars options
         public override string ToString()//print the items
         {

@@ -1,4 +1,5 @@
-﻿namespace RentCars.Core.Entities
+﻿
+namespace RentCars.Core.Entities
 {
     public class Company
     {
@@ -10,6 +11,10 @@
         {
             this.Id = id;
             this.Name = name;
+        }
+
+        public Company()
+        {
         }
     }
 }

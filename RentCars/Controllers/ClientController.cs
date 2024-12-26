@@ -26,14 +26,15 @@ namespace RentCars.Api.Controllers
 
         // GET api/<Client>/5
         [HttpGet("{id}")]
-        public ActionResult<Client> Get(int id)
+        public Client Get(int id)
         {
             var client = _clientService.Get(id);
             if (client == null)
             {
-                return NotFound("User not found");
+                Console.WriteLine("User not found");
+                return client;
             }
-            return Ok(client);
+            return null;
         }
 
         // POST api/<Client>
@@ -46,14 +47,15 @@ namespace RentCars.Api.Controllers
 
         // PUT api/<Client>/5
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] Client updatedClient)
+        public IActionResult Put([FromBody] Client updatedClient)
         {
-            try
+            Client client = Get(updatedClient.Id);
+           if (client != null)
             {
-                _clientService.UpdateClient(id, updatedClient);
+                _clientService.UpdateClient(updatedClient);
                 return Ok("Client updated successfully");
             }
-            catch (Exception)
+            else
             {
                 return NotFound("Client not found");
             }

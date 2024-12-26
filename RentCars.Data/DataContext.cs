@@ -15,9 +15,10 @@ namespace RentCars.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionBuilder)
         {
-            optionBuilder.UseSqlServer(@"Server=(localdb)\MSSQLLocalDB;Database=Data_db");
+            optionBuilder.UseSqlServer(@"Server=(localdb)\ProjectModels;Database=Data_db");
+                //.LogTo(Console.WriteLine,LogLevel.Information);
         }
-
+      
 
     }
 }

@@ -12,7 +12,7 @@ namespace RentCars.Core.Interfaces
         public List<Client> Get();
         public Client Get(int id);
         public void Post(Client c);
-        public void UpdateClient(int id, Client updatedClient);
+        public void UpdateClient(Client updatedClient);
         public void Delete(int id);
     }
 }

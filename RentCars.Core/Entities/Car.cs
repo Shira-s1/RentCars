@@ -25,7 +25,10 @@ namespace RentCars.Core.Entities
             this.Price = price;
             this.Model = Model;
         }
-        
+
+        public Car()
+        {
+        }
         public override string ToString()
         {
             return "Id: " + Id + " " + "Company Name: " + Cname + " " + " User Name: " + Name + " " +

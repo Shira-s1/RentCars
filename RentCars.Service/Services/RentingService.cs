@@ -12,34 +12,6 @@ namespace RentCars.Service.Services
     public class RentingService :IRentingService
     {
 
-        //private readonly IDataContext _dataContext;
-        //public RentingService(IDataContext dataContext) { _dataContext = dataContext; }
-        //public int Fine(DateTime dateTo)//קנס
-        //{
-        //    DateTime currentDate = DateTime.Now;
-        //    if (currentDate > dateTo)
-        //        return 2000;
-        //    return 0;
-        //}
-        //public void Change(int numOrder, DateTime dateFrom, DateTime dateTo)
-        //{
-        //    var order = _dataContext.orderList.FirstOrDefault(c => c.NumOrder == numOrder);
-        //    if (order != null)
-        //    {
-        //        order.NumOrder = numOrder;
-        //        order.DateFrom = dateFrom;
-        //        order.DateTo = dateTo;
-        //    }
-        //}
-        //public void Delete(int numOrder)
-        //{
-        //    var order = _dataContext.orderList.FirstOrDefault(c => c.NumOrder == numOrder);
-        //    if (order != null)
-        //    {
-        //        _dataContext.orderList.Remove(order);
-
-        //    }
-        //}
         private readonly DataContext _dataContext;
         public RentingService(DataContext dataContext)
         {
@@ -49,7 +21,7 @@ namespace RentCars.Service.Services
       
         public IEnumerable<Car> Get()
         {
-            return _dataContext.carList;
+            return _dataContext.carList.ToList();
         }
 
         
@@ -69,14 +41,14 @@ namespace RentCars.Service.Services
         {
             if (c != null)
             _dataContext.carList.Add(c);
-           
+            _dataContext.SaveChanges();
         }
 
         
         //public void Put(int id, [FromBody] string value)
-        public void Put(int id, Car updatedCar)
+        public void Put(Car updatedCar)
         {
-            var carToUpdate = _dataContext.carList.FirstOrDefault(c1 => c1.Id == id);
+            var carToUpdate = _dataContext.carList.FirstOrDefault(c1 => c1.Id == updatedCar.Id);
             if (carToUpdate != null)
             {
                 carToUpdate.Status = updatedCar.Status;
@@ -91,6 +63,7 @@ namespace RentCars.Service.Services
             {
                 throw new Exception("Car not found");
             }
+            _dataContext.SaveChanges();
         }
 
       
@@ -106,6 +79,7 @@ namespace RentCars.Service.Services
             {
                 throw new Exception("Number of order not found");
             }
+            _dataContext.SaveChanges();
         }
     }
 }
