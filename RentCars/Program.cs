@@ -16,7 +16,7 @@ builder.Services.AddSingleton<DataContext>();
 //builder.Services.AddScoped<IDataContext , DataContext>();
 builder.Services.AddScoped<ICarService, CarService>();
 builder.Services.AddScoped<IClientService, ClientService>();
-builder.Services.AddScoped<IRentingService, RentingService>();
+builder.Services.AddScoped<IRentingService, OrdersService>();
 
 var app = builder.Build();
 

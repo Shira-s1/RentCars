@@ -9,30 +9,30 @@ using RentCars.Data;
 
 namespace RentCars.Service.Services
 {
-    public class RentingService :IRentingService
+    public class OrdersService :IRentingService
     {
 
         private readonly DataContext _dataContext;
-        public RentingService(DataContext dataContext)
+        public OrdersService(DataContext dataContext)
         {
             _dataContext = dataContext;
         }
 
       
-        public IEnumerable<Car> Get()
+        public IEnumerable<Orders> Get()//מחזיר רשימת הזמנות
         {
-            return _dataContext.carList.ToList();
+            return _dataContext.orderList.ToList();
         }
 
         
-        public Car Get(int id)//מחפש רכב ומציג אותו לפי ID
+        public Orders Get(int orderNum)//מחפש מספר הזמנה ומציג אותו לפי 
         {
-            var car = _dataContext.carList.FirstOrDefault(c => c.Id == id);
-            if (car == null)
+            var order = _dataContext.orderList.FirstOrDefault(c => c.NumOrder == orderNum);
+            if (order == null)
             {
                 return null;
             }
-            return car;
+            return order;
         }
 
         
@@ -46,18 +46,16 @@ namespace RentCars.Service.Services
 
         
         //public void Put(int id, [FromBody] string value)
-        public void Put(Car updatedCar)
+        public void Put(Orders updatedOrder)//מעדכן פרטים בהזמנה
         {
-            var carToUpdate = _dataContext.carList.FirstOrDefault(c1 => c1.Id == updatedCar.Id);
-            if (carToUpdate != null)
+            var orderToUpdate = _dataContext.orderList.FirstOrDefault(c1 => c1.NumOrder == updatedOrder.NumOrder);
+            if (orderToUpdate != null)
             {
-                carToUpdate.Status = updatedCar.Status;
-                carToUpdate.LicensePlate = updatedCar.LicensePlate;
-                carToUpdate.Id = updatedCar.Id;
-                carToUpdate.Cname = updatedCar.Cname;
-                carToUpdate.Name = updatedCar.Name;
-                carToUpdate.Price = updatedCar.Price;
-                carToUpdate.Model = updatedCar.Model;
+                orderToUpdate.NumOrder = updatedOrder.NumOrder;
+                orderToUpdate.ClientId = updatedOrder.ClientId;
+                orderToUpdate.DateFrom = updatedOrder.DateFrom;
+                orderToUpdate.DateTo = updatedOrder.DateTo;
+                orderToUpdate.CarId = updatedOrder.CarId;
             }
             else
             {

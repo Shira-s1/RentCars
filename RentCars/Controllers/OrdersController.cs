@@ -11,10 +11,10 @@ namespace RentCars.Api.Controllers
 
     [Route("api/[controller]")]
     [ApiController]
-    public class RentingController : ControllerBase
+    public class OrdersController : ControllerBase
     {
         private readonly IRentingService _rentingService;
-        public RentingController(IRentingService context)
+        public OrdersController(IRentingService context)
         {
             _rentingService = context;
         }
@@ -29,21 +29,20 @@ namespace RentCars.Api.Controllers
 
         // GET api/<RentingController>/5
         [HttpGet("{id}")]
-        public Car Get(int id)//מחפש רכב ומציג אותו לפי ID
+        public Orders Get(int orderNum)//מחפש רכב ומציג אותו לפי מספר הזמנה
         {
-            var car = _rentingService.Get(id);
-            if (car == null)
+            var order = _rentingService.Get(orderNum);
+            if (order == null)
             {
                 Console.WriteLine("Car not found");
                 return null;
             }
-            return car;
+            return order;
         }
 
         // POST api/<RentingController>
         [HttpPost]
-        //public void Post([FromBody] string value)
-        public ActionResult Post([FromBody] Car c)//-ליצור חדש ולהוסיף אותו להוסיף רכב להשכרה
+        public ActionResult Post([FromBody] Car c)//wrong  -ליצור חדש ולהוסיף אותו להוסיף רכב להשכרה
         {
             if (c == null)
             {
@@ -55,44 +54,30 @@ namespace RentCars.Api.Controllers
 
         // PUT api/<RentingController>/5
         [HttpPut("{id}")]
-        //public void Put(int id, [FromBody] string value)
 
         //לשאול - תמיד מדפיס שגיאה!
-        //להוריד את האיידי ולהשוות את כל הערכים שקיימים באובייקט אחד אחד- אפשר לחפש בפרוייקטים קודמים- לעשות את זה ם בשאר הפרוייקטים!
-        //ואז לעשות את מה שהמורה עשתה עם השמירת שינויים
-        public void Put([FromBody] Car updatedCar)//עדכון רכב שהושכר- לשנות סטטוס
+        public void Put([FromBody] Orders order)//עדכון הזמנה- לשנות סטטוס
         {
-            Car car = Get(updatedCar.Id);
-            if (car != null) { 
- 
-                //car.LicensePlate = updatedCar.LicensePlate;
-                //car.Id = updatedCar.Id;
-                //car.Cname = updatedCar.Cname;
-                //car.Name = updatedCar.Name;
-                //car.Status = updatedCar.Status;
-                //car.Price = updatedCar.Price;
-                //car.Model = updatedCar.Model;
+            Orders updateOrder = Get(order.NumOrder);
+            if (updateOrder != null) { 
 
-                //לקרוא לפונקציה של סרוויס
-                _rentingService.Put(car);
+                _rentingService.Put(updateOrder);
             } 
             else 
-           
                 throw new Exception("Car not found"); 
 
         }
         //איך רואים את המחיקה אם מספר ההזמנה הוא אקראי?
         // DELETE api/<RentingController>/5
         [HttpDelete("{id}")]
-        // public void Delete(int id)
-        public void Delete(int numOrder)//מוחק לפי מספר הזמנה
+        public void Delete(int numOrder)//מוחק לפי מספר הזמנה wrong!
         {
             var orderToDelete = _rentingService.Get(numOrder);//מציג את הרכב
             if (orderToDelete != null)
             {
                 _rentingService.Delete(numOrder);
             }
-           
+            else throw new Exception("Order not found");
         }
         
         

@@ -10,10 +10,10 @@ namespace RentCars.Core.Interfaces
     public interface IRentingService
     {
     
-        public IEnumerable<Car> Get();
-        public Car Get(int id);
+        public IEnumerable<Orders> Get();
+        public Orders Get(int orderNum);
         public void Post(Car c);
-        public void Put(Car updatedCar);
+        public void Put(Orders updatedOrder);
         public void Delete(int numOrder);
     }
 }

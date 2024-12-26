@@ -46,7 +46,7 @@ namespace RentCars.Api.Controllers
         }
 
         // PUT api/<Client>/5
-        [HttpPut("{id}")]
+        [HttpPut("{id}")]//wrong
         public IActionResult Put([FromBody] Client updatedClient)
         {
             Client client = Get(updatedClient.Id);
@@ -63,7 +63,7 @@ namespace RentCars.Api.Controllers
 
         // DELETE api/<Client>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public void Delete(int id)//wrong
         {
             try
             {
