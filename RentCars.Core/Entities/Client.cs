@@ -8,14 +8,19 @@ namespace RentCars.Core.Entities
         public string Name { get; set; }
         public string PhoneNumber { get; set; }
         public int LicenseNumber { get; set; }//רשיון
-
-        public Client(int id, string name, string phoneNumber, int LicenseNumber)//add
+        public string Address { get; set; }
+        public string Email { get; set; }
+        
+        public DateTime DateOfBirth { get; set; }
+        public Client(int id, string name, string phoneNumber, int LicenseNumber, string Address, string Email, DateTime dateOfBirth)//add
         {
             this.Id = id;
             this.Name = name;
             this.PhoneNumber = phoneNumber;
             this.LicenseNumber = LicenseNumber;
-
+            this.Address = Address;
+            this.Email = Email;
+            this.DateOfBirth = dateOfBirth;
         }
         public Client()
         {
@@ -23,7 +28,7 @@ namespace RentCars.Core.Entities
         }
 
 
-        //3 cars options
+      
         public override string ToString()//print the items
         {
             return "Id: " + Id + " "  + " User Name: " + Name + " " +

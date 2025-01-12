@@ -1,3 +1,4 @@
+using RentCars.Core.DTOs;
 using RentCars.Core.Entities;
 using RentCars.Core.Interfaces;
 using RentCars.Data;
@@ -16,7 +17,10 @@ builder.Services.AddSingleton<DataContext>();
 //builder.Services.AddScoped<IDataContext , DataContext>();
 builder.Services.AddScoped<ICarService, CarService>();
 builder.Services.AddScoped<IClientService, ClientService>();
-builder.Services.AddScoped<IRentingService, OrdersService>();
+builder.Services.AddScoped<IOrdersService, OrdersService>();
+
+
+builder.Services.AddAutoMapper(typeof(MapperProfile));
 
 var app = builder.Build();
 

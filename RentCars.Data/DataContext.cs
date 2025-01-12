@@ -4,6 +4,7 @@ using System;
 using RentCars.Core.Interfaces;
 using RentCars.Core.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace RentCars.Data
 {
@@ -15,8 +16,8 @@ namespace RentCars.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionBuilder)
         {
-            optionBuilder.UseSqlServer(@"Server=(localdb)\ProjectModels;Database=Data_db");
-                //.LogTo(Console.WriteLine,LogLevel.Information);
+            optionBuilder.UseSqlServer(@"Server=(localdb)\ProjectModels;Database=Data_db")
+                .LogTo(Console.WriteLine, LogLevel.Information);
         }
       
 

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using RentCars.Core.DTOs;
 using RentCars.Core.Entities;
 using RentCars.Core.Interfaces;
 using RentCars.Service.Services;
@@ -16,25 +17,28 @@ namespace RentCars.Api.Controllers
         {
             _clientService = context;
         }
-       
+
         // GET: api/<Client>
         [HttpGet]
-        public ActionResult<List<Client>> Get()
+        public ActionResult<List<ClientDTO>> Get()
         {
             return Ok(_clientService.Get());
         }
 
         // GET api/<Client>/5
         [HttpGet("{id}")]
-        public Client Get(int id)
+        public ClientDTO Get(int id)//!!ClientDTO
         {
-            var client = _clientService.Get(id);
+            ClientDTO client = _clientService.Get(id);
+
             if (client == null)
             {
+                // אם הלקוח לא נמצא, מדפיסים הודעה ומחזירים null
                 Console.WriteLine("User not found");
-                return client;
+                return null;
             }
-            return null;
+
+            return client;
         }
 
         // POST api/<Client>
@@ -47,10 +51,10 @@ namespace RentCars.Api.Controllers
 
         // PUT api/<Client>/5
         [HttpPut("{id}")]//wrong
-        public IActionResult Put([FromBody] Client updatedClient)
+        public IActionResult Put([FromBody] Client updatedClient)//!!ClientDTO
         {
-            Client client = Get(updatedClient.Id);
-           if (client != null)
+            ClientDTO client = Get(updatedClient.Id);
+            if (client != null)
             {
                 _clientService.UpdateClient(updatedClient);
                 return Ok("Client updated successfully");

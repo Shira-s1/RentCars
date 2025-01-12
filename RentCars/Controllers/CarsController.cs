@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using RentCars.Core.Entities;
 //using RentCars.Entities;
 using RentCars.Core.Interfaces;
 using RentCars.Service.Services;
 using System.Diagnostics;
+
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -20,6 +22,7 @@ namespace RentCars.Api.Controllers
             _carService = context;
         }
 
+     
         // GET: api/<CarsController>
         [HttpGet]
         public ActionResult<List<Car>> Get()
@@ -54,13 +57,14 @@ namespace RentCars.Api.Controllers
 
         // PUT api/<CarsController>/5
         [HttpPut("{id}")]
+        //מוצא את האובייקט אבל אחרי שמפעילים את גט לא רואים עדכון
         public IActionResult Put([FromBody] Car updatedCar)
         {
             Car car = _carService.GetSearch(updatedCar.Id);
             if (car != null)
             {
                 _carService.UpdateCar(updatedCar); // מעדכנת את המידע של הרכב ברשימה
-                return NoContent();
+                return Ok(updatedCar);
             }
             else
             {

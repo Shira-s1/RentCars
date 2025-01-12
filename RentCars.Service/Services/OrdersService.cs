@@ -6,47 +6,55 @@ using System.Diagnostics;
 using System.Reflection;
 using System.Xml.Linq;
 using RentCars.Data;
+using AutoMapper;
+using RentCars.Core.DTOs;
 
 namespace RentCars.Service.Services
 {
-    public class OrdersService :IRentingService
+    public class OrdersService : IOrdersService
     {
 
         private readonly DataContext _dataContext;
-        public OrdersService(DataContext dataContext)
+        private readonly IMapper _mapper;
+
+        public OrdersService(DataContext dataContext, IMapper mapper)
         {
             _dataContext = dataContext;
+            _mapper = mapper;
         }
 
-      
-        public IEnumerable<Orders> Get()//מחזיר רשימת הזמנות
+        //1 
+        public List<OrdersDTO> Get()//- ללא מספר אשראי מחזיר רשימת הזמנות
         {
-            return _dataContext.orderList.ToList();
+            var orders = _dataContext.orderList.ToList();
+            return _mapper.Map<List<OrdersDTO>>(orders);
         }
 
-        
-        public Orders Get(int orderNum)//מחפש מספר הזמנה ומציג אותו לפי 
+        //2
+        public OrdersDTO Get(int orderNum)//מחפש מספר הזמנה ומציג אותו לפי 
         {
             var order = _dataContext.orderList.FirstOrDefault(c => c.NumOrder == orderNum);
             if (order == null)
             {
                 return null;
             }
-            return order;
+            //return order;
+            return _mapper.Map<OrdersDTO>(order);//מחזיר את ההזמנה בלי מספר אשראי
         }
 
-        
+
         //public void Post([FromBody] string value)
         public void Post(Car c)//-ליצור חדש ולהוסיף אותו להוסיף רכב להשכרה
         {
             if (c != null)
-            _dataContext.carList.Add(c);
+                _dataContext.carList.Add(c);
             _dataContext.SaveChanges();
         }
 
-        
+
         //public void Put(int id, [FromBody] string value)
-        public void Put(Orders updatedOrder)//מעדכן פרטים בהזמנה
+        //  public void Put(Orders updatedOrder)//לפני שינוי DTO
+        public void Put(OrdersDTO updatedOrder)//מעדכן פרטים בהזמנה
         {
             var orderToUpdate = _dataContext.orderList.FirstOrDefault(c1 => c1.NumOrder == updatedOrder.NumOrder);
             if (orderToUpdate != null)
@@ -56,6 +64,9 @@ namespace RentCars.Service.Services
                 orderToUpdate.DateFrom = updatedOrder.DateFrom;
                 orderToUpdate.DateTo = updatedOrder.DateTo;
                 orderToUpdate.CarId = updatedOrder.CarId;
+                // orderToUpdate.CreditCardNumber = updatedOrder.CreditCardNumber;
+                //orderToUpdate.PaymentMethod = updatedOrder.PaymentMethod;
+
             }
             else
             {
@@ -64,7 +75,7 @@ namespace RentCars.Service.Services
             _dataContext.SaveChanges();
         }
 
-      
+
         // public void Delete(int id)
         public void Delete(int numOrder)//מוחק לפי מספר הזמנה
         {

@@ -11,20 +11,21 @@ namespace RentCars.Core.Entities
         public DateTime DateFrom { get; set; }
         public DateTime DateTo { get; set; }
         public int CarId { get; set; }//מספר רישוי- לשנות שם
+       
+        public string CreditCardNumber { get; set; }//מספר אשראי
 
-        //dalete
-        //change
-        //cala price 
-        //פונקציה שמשתמשת בחישוב המחיר שנמצא ברכב וסוכמת את הכול לפי חישוב הימים
+        public string PaymentMethod { get; set; }  // כרטיס אשראי / העברה בנקאית / תשלום אחר
 
-        public Orders(int numOrder, int clientId, DateTime dateFrom, DateTime dateTo, int carId)
+
+        public Orders(int numOrder, int clientId, DateTime dateFrom, DateTime dateTo, int carId, string creditCardNumber, string paymentMethod)
         {
             this.NumOrder = numOrder;
             this.ClientId = clientId;
             this.DateFrom = dateFrom;
             this.DateTo = dateTo;
             this.CarId = carId;
-
+            this.CreditCardNumber = creditCardNumber;
+            this.PaymentMethod = paymentMethod;
         }
 
         public Orders()

@@ -1,4 +1,5 @@
-﻿using RentCars.Core.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using RentCars.Core.Entities;
 using RentCars.Core.Enum;
 using RentCars.Core.Interfaces;
 using RentCars.Data;
@@ -20,7 +21,8 @@ namespace RentCars.Service.Services
 
         public List<Car> GetCars() //מחזירה את רשימת הרכבים
         {
-            return _dataContext.carList.ToList();
+           return _dataContext.carList.Include(c => c.Cname).ToList();
+
         }
 
 
