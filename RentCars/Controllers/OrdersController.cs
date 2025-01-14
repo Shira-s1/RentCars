@@ -59,13 +59,13 @@ namespace RentCars.Api.Controllers
 
         // POST api/<RentingController>
         [HttpPost]
-        public ActionResult Post([FromBody] Car c)//wrong  -ליצור חדש ולהוסיף אותו להוסיף רכב להשכרה
+        public ActionResult Post([FromBody] Orders o)// ליצור הזמנה חדשה ולהוסיף לרשימת הזמנות
         {
-            if (c == null)
+            if (o == null)
             {
                 return BadRequest("Invalid car data");
             }
-            _rentingService.Post(c);
+            _rentingService.Post(o);
             return Ok();
         }
 

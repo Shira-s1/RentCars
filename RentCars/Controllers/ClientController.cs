@@ -29,7 +29,7 @@ namespace RentCars.Api.Controllers
         [HttpGet("{id}")]
         public ClientDTO Get(int id)//!!ClientDTO
         {
-            ClientDTO client = _clientService.Get(id);
+            var client = _clientService.Get(id);
 
             if (client == null)
             {

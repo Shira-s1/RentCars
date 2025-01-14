@@ -13,7 +13,7 @@ namespace RentCars.Core.Interfaces
 
         public List<OrdersDTO> Get();
         public OrdersDTO Get(int orderNum);
-        public void Post(Car c);
+        public void Post(Orders c);
         public void Put(OrdersDTO updatedOrder);//מעדכן פרטים בהזמנה
         public void Delete(int numOrder);
     }

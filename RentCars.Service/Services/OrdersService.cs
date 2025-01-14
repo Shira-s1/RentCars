@@ -44,16 +44,18 @@ namespace RentCars.Service.Services
 
 
         //public void Post([FromBody] string value)
-        public void Post(Car c)//-ליצור חדש ולהוסיף אותו להוסיף רכב להשכרה
+        public void Post(Orders o)//ליצור הזמנה חדשה
         {
-            if (c != null)
-                _dataContext.carList.Add(c);
+            if (o != null)
+                _dataContext.orderList.Add(o);
             _dataContext.SaveChanges();
         }
 
 
         //public void Put(int id, [FromBody] string value)
         //  public void Put(Orders updatedOrder)//לפני שינוי DTO
+       
+        //3
         public void Put(OrdersDTO updatedOrder)//מעדכן פרטים בהזמנה
         {
             var orderToUpdate = _dataContext.orderList.FirstOrDefault(c1 => c1.NumOrder == updatedOrder.NumOrder);

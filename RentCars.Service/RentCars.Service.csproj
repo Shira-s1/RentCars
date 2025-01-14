@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\RentCars.Core\RentCars.Core.csproj" />
     <ProjectReference Include="..\RentCars.Data\RentCars.Data.csproj" />
   </ItemGroup>
